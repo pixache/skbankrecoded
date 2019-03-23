@@ -1,4 +1,5 @@
 Economy:
+    # You can change these as you want, but don't forget to change the lores of items too as well!
     Money: 5000
     EXP: 500
 Module-Names:
