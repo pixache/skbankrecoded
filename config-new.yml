@@ -17,8 +17,6 @@ Module-Names:
     Close:
         Name: '&b» &aClose &b»'
         Lore: '&7Click to close the menu!'
-    Çık:
-        Lore: '&7Click to close the menu!'
     Back:
         Name: '&b» &aGo Back &b»'
         Lore: '&7Click to return to main menu!'
@@ -28,4 +26,3 @@ Module-Names:
     Exp-Withdraw:
         Name: '&b» &aWithdraw EXP &b»'
         Lore: '&7Click to withdraw 500 exp(s)!'
-Version: v1.0
