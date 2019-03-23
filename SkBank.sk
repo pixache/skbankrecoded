@@ -1,3 +1,6 @@
+#Version: 1.0
+#Don't change the version!
+
 function changePass(p: player, y: text):
     yaml value "players.%{_p}%.lock" from "SkBank/Players" is true:
         yaml value "players.%{_p}%.password" from "SkBank/Players" isn't "not set":
