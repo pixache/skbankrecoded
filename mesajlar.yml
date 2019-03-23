@@ -1,0 +1,52 @@
+Durum-Mesajları:
+    Çıkış:
+        Yapıldı: '&eBaşarıyla çıkış yapıldı.'
+        Yapılmış: '&eÇıkış yapılmış.'
+    Giriş:
+        Yapın: '&eLütfen giriş yapın, /banka giriş <şifre>.'
+        Yapıldı: '&eBaşarıyla giriş yapıldı.'
+        Yapılmış: '&eGiriş yapılmış.'
+    Yardım: '&e/banka yardım &f- Yardımı gösterir.||&e/banka aç &f- Banka menüsünü
+        açar.||&e/banka giriş <şifre> &f- Hesaba giriş yaparsınız.||&e/banka çıkış
+        &f- Çıkış yaparsınız.||&e/banka şifre <ayarla/değiştir> <şifre> &f-Şifre belirlersiniz.'
+İşlem-Mesajları:
+    Hata:
+        Bakiye-Yetersiz: '&eBu işlem için bakiyeniz yetmiyor.'
+        Exp-Yetersiz: '&eBu işlem için tecrübeniz yetmiyor.'
+        Para-Yetersiz: '&eBu işlem için paranız yetmiyor.'
+    Tecrübe:
+        Çekildi: '&eBaşarıyla 500 tecrübe çekildi.'
+        Yatırıldı: '&eBaşarıyla 500 tecrübe yatırıldı.'
+    İşlem-Başarılı: '&eIşlem başarılı.'
+Şifre-Mesajları:
+    Ayarlandı: '&eŞifre başarıyla ayarlandı.'
+    Değiştirildi: '&eŞifre değiştirildi, yeniden giriş yapın.'
+    Hatalı: '&eHatalı şifre.'
+    Koyunuz: '&eÖncelikli olarak bir şifre koyun, &a/banka.'
+    Şifreniz-Var: '&eBir şifreniz var, kaldırmak için &a/banka şifre'
+    Yeni-Şifre-Gir: '&eKullanacağınız yeni şifrenizi girin.'
+Prefix: '&7[&aBanka&7]'
+Islem-Mesajlari:
+    Banka-Dolu: '&eBu işlem banka haznenizi aşıyor, seviye atlatın.'
+    Bakiye-Veya-Para-Yetersiz: '&eBu işlem için bakiye veya paranız yetmiyor.'
+    Seviye-Atlandi: '&eBaşarıyla seviye atladınız!{yeni-sira}{prefix} &eYeni seviyeniz:
+        &7{seviye}'
+    Tecrube-Cekildi: '&eBaşarıyla 500 tecrübe çekildi.'
+    Tecrube-Yetersiz: '&eBu işlem için 500 tecrübe gerekir.'
+    Tecrube-Yatirildi: '&eBaşarıyla 500 tecrübe yatırıldı.'
+    Islem-Basarili: '&eIşlem başarılı.'
+Durum-Mesajlari:
+    Cikis-Yapildi: '&eÇıkış yapıldı.'
+    Cikis-Yapiniz: '&eBu işlem için çıkış yapmalısınız.'
+    Giris-Yapiniz: '&eBu işlem için giriş yapmalısınız.'
+    Giris-Yapilmis: '&eGiriş yapılmış.'
+    Siralama-Kapatilmis: '&eBu sıralama yöneticiler tarafından kapatılmış.'
+    Yetkiniz-Yok: '&eBu işlem için yetkiniz yok.'
+Sifre-Mesajlari:
+    Kilit-Acildi: '&eBanka kilidi açıldı.'
+    Sifre-Ayarlandi: '&eŞifre başarıyla ayarlandı.'
+    Sifre-Degistirildi: '&eŞifre değiştirildi, yeniden giriş yapın.'
+    Sifre-Girilmemis-Veya-Hatali: '&eŞifre girilmemiş veya hatalı.'
+    Sifre-Koyunuz: '&eÖncelikli olarak bir şifre koyun, &a/banka.'
+    Sifreniz-Var: '&eBir şifreniz var, kaldırmak için &a/banka şifre'
+    Yeni-Sifre-Gir: '&eKullanacak olduğunuz yeni şifrenizi girin.'
