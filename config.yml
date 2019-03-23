@@ -1,0 +1,31 @@
+Economy:
+    Money: 5000
+    EXP: 500
+Module-Names:
+    Bank-GUI: '&4My Bank'
+    Information: '&b» &aInformation &b»'
+    Operations: '&b» &aMoney Operations &b»'
+    Splitter:
+        Name: '&b» &aBank &b»'
+        Lore: '&7The most trustful bank ever!'
+    Deposit:
+        Name: '&b» &aDeposit &b»'
+        Lore: '&7Click to deposit 5000$!'
+    Withdraw:
+        Name: '&b» &aWithdraw &b»'
+        Lore: '&7Click to withdraw 5000$!'
+    Close:
+        Name: '&b» &aClose &b»'
+        Lore: '&7Click to close the menu!'
+    Çık:
+        Lore: '&7Click to close the menu!'
+    Back:
+        Name: '&b» &aGo Back &b»'
+        Lore: '&7Click to return to main menu!'
+    Exp-Deposit:
+        Name: '&b» &aDeposit EXP &b»'
+        Lore: '&7Click to deposit 500 exp(s)!'
+    Exp-Withdraw:
+        Name: '&b» &aWithdraw EXP &b»'
+        Lore: '&7Click to withdraw 500 exp(s)!'
+Version: v1.0

@@ -1,0 +1,27 @@
+Status:
+    Logged:
+        Out: '&eYou have logged out from your bank account.'
+        Out-Already: '&eYou''ve already logged out.'
+        In: '&eYou have logged in to your bank account.'
+        In-Already: '&eYou''ve already logged in.'
+    Log-In: '&ePlease log in first, &a/bank login <pw>'
+    Help-Message: '&e/bank help &f- Shows the help message.||&e/bank open &f- Opens
+        bank menu.||&e/bank login <pw> &f- To login to your account.||&e/bank logout
+        &f- To logout from your account.||&e/bank pw <set/change> <pw> &f-You set
+        or change your password.'
+Operation:
+    Error:
+        Not-Enough-Currency: '&eYou don''t have enough curreny.'
+        Not-Enough-Exp: '&eYou don''t have enough exp(s).'
+        Not-Enough-Money: '&eYou don''t have enough money.'
+    Exp:
+        Withdraw-Success: '&eSuccessfully withdraw 500 exp(s).'
+        Deposit-Success: '&eSuccessfully deposit 500 exp(s).'
+    Succesfull: '&eOperation was succesfull.'
+Password:
+    Set-Success: '&eYou have set your password successfully.'
+    Changed: '&eYou have changed your password, please login again.'
+    Wrong: '&eWrong password, pls check again.'
+    Set-Pw-First: '&ePlease set a password first, &a/bank help.'
+    Already-Have: '&eYou already have a password, to change: &a/bank pw'
+    Enter-New-Pw: '&ePlease enter your new password that you''ll use.'
