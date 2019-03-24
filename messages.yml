@@ -1,18 +1,25 @@
+Commands:
+    Message-Splitter:
+    - '&9&m--------------------------------'
+    Tip:
+    - '&6You may click to commands to auto write.'
+    Help-Message:
+    - '&6<suggest command:/skbank help>/skbank &7help &b» &aShows the help message.'
+    - '&6<suggest command:/skbank login>/skbank &7login <password> &b» &aLogin to
+        your bank.'
+    - '&6<suggest command:/skbank logout>/skbank &7logout &b» &aLogout from your bank.'
+    - '&6<suggest command:/skbank open>/skbank &7open &b» &aOpens bank GUI.'
+    - '&6<suggest command:/skbank pw set>/skbank &7pw set <password> &b» &aTo set
+        your password.'
 Status:
-    Logged:
-        Out: '&eYou have logged out from your bank account.'
-        Out-Already: '&eYou''ve already logged out.'
-        In: '&eYou have logged in to your bank account.'
-        In-Already: '&eYou''ve already logged in.'
+    Logged-Out: '&eYou have logged out from your bank account.'
+    Logged-Out-Already: '&eYou''ve already logged out.'
     Log-In: '&ePlease log in first, &a/bank login <pw>'
-    help-command:
-    - '&e/skbank help &f> To see help message.'
-    - '&e/skbank log<in/out> [<pw>] &f> To login or out to your bank.'
-    - '&e/skbank open &f> To open bank.'
-    - '&e/skbank pw <set/change> <pw> &f> To edit your password.'
+    Logged-In: '&eYou have logged in to your bank account.'
+    Logged-In-Already: '&eYou''ve already logged in.'
 Operation:
     Error:
-        Not-Enough-Currency: '&eYou don''t have enough curreny.'
+        Not-Enough-Currency: '&eYou don''t have enough currency.'
         Not-Enough-Exp: '&eYou don''t have enough exp(s).'
         Not-Enough-Money: '&eYou don''t have enough money.'
     Exp:
