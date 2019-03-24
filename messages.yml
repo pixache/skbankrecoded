@@ -5,10 +5,11 @@ Status:
         In: '&eYou have logged in to your bank account.'
         In-Already: '&eYou''ve already logged in.'
     Log-In: '&ePlease log in first, &a/bank login <pw>'
-    Help-Message: '&e/bank help &f- Shows the help message.||&e/bank open &f- Opens
-        bank menu.||&e/bank login <pw> &f- To login to your account.||&e/bank logout
-        &f- To logout from your account.||&e/bank pw <set/change> <pw> &f-You set
-        or change your password.'
+    help-command:
+    - '&e/skbank help &f> To see help message.'
+    - '&e/skbank log<in/out> [<pw>] &f> To login or out to your bank.'
+    - '&e/skbank open &f> To open bank.'
+    - '&e/skbank pw <set/change> <pw> &f> To edit your password.'
 Operation:
     Error:
         Not-Enough-Currency: '&eYou don''t have enough curreny.'
