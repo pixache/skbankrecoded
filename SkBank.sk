@@ -1,4 +1,4 @@
-#Version: 1.1
+#Version: 1.2
 #Don't change the version!
 
 function changePass(p: player, y: text):
@@ -202,6 +202,8 @@ command /bank [<text=help>] [<text>] [<text>]:
 			executor has permission "skbank.reload":
 				if line 1 in file "plugins/Skript/scripts/%script's name%.sk" isn't line 1 from url "https://raw.githubusercontent.com/pixache/skbankrecoded/master/SkBank.sk":
 					set {_n} to line 1 in file "plugins/Skript/scripts/%script's name%.sk"
+					set {_s} to line 1 of url "https://raw.githubusercontent.com/pixache/skbankrecoded/master/SkBank.sk"
+					replace all "##Version: " with "" in {_s}
 					replace all "##Version: " with "" in {_n}
 					create dir "plugins/SkBank/backups/%{_n}%"
 					set file contents of "plugins/SkBank/backups/%{_n}%/%script's name%.sk" to file contents of "plugins/Skript/scripts/%script's name%.sk"
@@ -209,7 +211,7 @@ command /bank [<text=help>] [<text>] [<text>]:
 					set file contents of "plugins/SkBank/backups/%{_n}%/config.yml" to file contents of "plugins/SkBank/config.yml"
 					set file contents of "plugins/Skript/scripts/%script's name%.sk" to contents from url "https://raw.githubusercontent.com/pixache/skbankrecoded/master/SkBank.sk"
 					execute executor command "/sk reload %script's name%"
-					send "&eSkBank successfully updated to version %{_n}%" and "&eYou can find old version in backups folder."
+					send "&eSkBank successfully updated to version %{_s}%" and "&eYou can find old version in backups folder."
 				else:
 					send "&eYou are using the latest version of SkBank."
 		arg-1 is "open":
