@@ -12,24 +12,27 @@ Commands:
     - '&6<suggest command:/skbank pw set>/skbank &7pw set <password> &b» &aTo set
         your password.'
 Status:
-    Logged-Out: '&eYou have logged out from your bank account.'
-    Logged-Out-Already: '&eYou''ve already logged out.'
-    Log-In: '&ePlease log in first, &a/bank login <pw>'
-    Logged-In: '&eYou have logged in to your bank account.'
-    Logged-In-Already: '&eYou''ve already logged in.'
+    Logged-Out: '&7[&9&lBANK&7] &b» &eYou have logged out from your bank account.'
+    Logged-Out-Already: '&7[&9&lBANK&7] &b» &eYou have already logged out.'
+    Log-In: '&7[&9&lBANK&7] &b» &eYou didnot login, &c<suggest command:/bank login>click
+        to login.'
+    Logged-In: '&7[&9&lBANK&7] &b» &eLog in succesfull, you may open bank now.'
+    Logged-In-Already: '&7[&9&lBANK&7] &b» &eYou have already logged in.'
 Operation:
     Error:
-        Not-Enough-Currency: '&eYou don''t have enough currency.'
-        Not-Enough-Exp: '&eYou don''t have enough exp(s).'
-        Not-Enough-Money: '&eYou don''t have enough money.'
+        Not-Enough-Currency: '&7[&9&lBANK&7] &b» &eYou do not have enough currency.'
+        Not-Enough-Exp: '&7[&9&lBANK&7] &b» &eYou do not have enough exp(s).'
+        Not-Enough-Money: '&7[&9&lBANK&7] &b» &eYou do not have enough money.'
     Exp:
-        Withdraw-Success: '&eSuccessfully withdraw 500 exp(s).'
-        Deposit-Success: '&eSuccessfully deposit 500 exp(s).'
-    Succesfull: '&eOperation was succesfull.'
+        Deposit-Success: '&7[&9&lBANK&7] &b» &eSuccessfully deposit 500 exp(s).'
+        Withdraw-Success: '&7[&9&lBANK&7] &b» &eSuccessfully withdraw 500 exp(s).'
+    Succesfull: '&7[&9&lBANK&7] &b» &eOperation was succesfull.'
 Password:
-    Set-Success: '&eYou have set your password successfully.'
-    Changed: '&eYou have changed your password, please login again.'
-    Wrong: '&eWrong password, pls check again.'
-    Set-Pw-First: '&ePlease set a password first, &a/bank help.'
-    Already-Have: '&eYou already have a password, to change: &a/bank pw'
-    Enter-New-Pw: '&ePlease enter your new password that you''ll use.'
+    Already-Have: '&7[&9&lBANK&7] &b» &eYou already have a password, &c<suggest command:/bank
+        pw change>click to change'
+    Changed: '&7[&9&lBANK&7] &b» &eYou have changed your password, please login again.'
+    Enter-New-Pw: '&7[&9&lBANK&7] &b» &ePlease enter your new password that you will
+        use.'
+    Set-Pw-First: '&7[&9&lBANK&7] &b» &ePlease set a password first, &a/bank help.'
+    Set-Success: '&7[&9&lBANK&7] &b» &eYou have set your password successfully.'
+    Wrong: '&7[&9&lBANK&7] &b» &eWrong password, pls check again.'
