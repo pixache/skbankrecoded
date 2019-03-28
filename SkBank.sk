@@ -1,12 +1,12 @@
-#Version: 1.0
+#Version: 1.4
 #Don't change the version!
 
 function changePass(p: player, y: text):
-	yaml value "players.%{_p}%.login-status" of file "plugins/SkBank/playerdata/%{_p}%.yml" is true:
-		yaml value "players.%{_p}%.password" of file "plugins/SkBank/playerdata/%{_p}%.yml" isn't "not set":
-			set yaml value "players.%{_p}%.password" of file "plugins/SkBank/playerdata/%{_p}%.yml" to {_y}
+	yaml value "%{_p}%.login-status" of file "plugins/SkBank/playerdata/%{_p}%.yml" is true:
+		yaml value "%{_p}%.password" of file "plugins/SkBank/playerdata/%{_p}%.yml" isn't "not set":
+			set yaml value "%{_p}%.password" of file "plugins/SkBank/playerdata/%{_p}%.yml" to {_y}
 			sendYAMLFile({_p}, "Password.Changed")
-			set yaml value "players.%{_p}%.login-status" of file "plugins/SkBank/playerdata/%{_p}%.yml" to false
+			set yaml value "%{_p}%.login-status" of file "plugins/SkBank/playerdata/%{_p}%.yml" to false
 	
 		else:
 			sendYAMLFile({_p}, "Password.Set-Pw-First")
@@ -14,72 +14,78 @@ function changePass(p: player, y: text):
 		sendYAMLFile({_p}, "Status.Log-In")
 
 function checkPass(p: player, y: text) :: objects:
-	yaml value "players.%{_p}%.login-status" of file "plugins/SkBank/playerdata/%{_p}%.yml" isn't true:
-		set {_t} to yaml value "players.%{_p}%.password" of file "plugins/SkBank/playerdata/%{_p}%.yml"
+	yaml value "%{_p}%.login-status" of file "plugins/SkBank/playerdata/%{_p}%.yml" isn't true:
+		set {_t} to yaml value "%{_p}%.password" of file "plugins/SkBank/playerdata/%{_p}%.yml"
 		if {_t} is "not set":
 			sendYAMLFile({_p}, "Password.Set-Pw-First")
 		else if {_y} isn't "%{_t}%":
 			sendYAMLFile({_p}, "Password.Wrong")
 		else if {_y} is "%{_t}%":
-			set yaml value "players.%{_p}%.login-status" of file "plugins/SkBank/playerdata/%{_p}%.yml" to true
-	
+			set yaml value "%{_p}%.login-status" of file "plugins/SkBank/playerdata/%{_p}%.yml" to true
 			sendYAMLFile({_p}, "Status.Logged-In")
 			return true
 	else:
 		sendYAMLFile({_p}, "Status.Logged-In-Already")
 
 function depositEXP(p: player):
+	load yaml "plugins/SkBank/playerdata/%{_p}%.yml" as "%{_p}%"
 	{_p}'s xp >= {exp}:
-		remove 500 from {_p}'s exp
-		set yaml value "players.%{_p}%.exp-in-bank" of file "plugins/SkBank/playerdata/%{_p}%.yml" to (yaml value "players.%{_p}%.exp-in-bank" of file "plugins/SkBank/playerdata/%{_p}%.yml" + {exp})
-		set yaml value "players.%{_p}%.exp-of-player" of file "plugins/SkBank/playerdata/%{_p}%.yml" to (yaml value "players.%{_p}%.exp-of-player" of file "plugins/SkBank/playerdata/%{_p}%.yml" - {exp})
+		remove {exp} from {_p}'s exp
+		set yaml value "%{_p}%.exp-in-bank" from "%{_p}%" to (yaml value "%{_p}%.exp-in-bank" from "%{_p}%" + {exp})
+		set yaml value "%{_p}%.exp-of-player" from "%{_p}%" to (yaml value "%{_p}%.exp-of-player" from "%{_p}%" - {exp})
 
 		sendYAMLFile({_p}, "Operation.Exp.Deposit-Success")
 	else:
 		sendYAMLFile({_p}, "Operation.Error.Not-Enough-Exp")
+	save yaml "%{_p}%" without extra lines between nodes
+	unload yaml "%{_p}%"
 
 function depositMoney(p: player):
+	load yaml "plugins/SkBank/playerdata/%{_p}%.yml" as "%{_p}%"
 	{_p}'s balance - {money} >= 0:
 		{_p}'s balance >= {money}:
 			remove {money} from {_p}'s balance
-			set yaml value "players.%{_p}%.money-of-player" of file "plugins/SkBank/playerdata/%{_p}%.yml" to ({_p}'s balance - {money})
-			set yaml value "players.%{_p}%.money-in-bank" of file "plugins/SkBank/playerdata/%{_p}%.yml" to (yaml value "players.%{_p}%.money-in-bank" of file "plugins/SkBank/playerdata/%{_p}%.yml" + {money})
+			set yaml value "%{_p}%.money-of-player" from "%{_p}%" to ({_p}'s balance - {money})
+			set yaml value "%{_p}%.money-in-bank" from "%{_p}%" to (yaml value "%{_p}%.money-in-bank" from "%{_p}%" + {money})
 			sendYAMLFile({_p}, "Operation.Succesfull")
 		else if {_p}'s balance < {money}:
 			sendYAMLFile({_p}, "Operation.Error.Not-Enough-Money")
 	else if {_p}'s balance - {money} < 0:
 		sendYAMLFile({_p}, "Operation.Error.Not-Enough-Money")
+	save yaml "%{_p}%" without extra lines between nodes
+	unload yaml "%{_p}%"
 
 function getMN(y: text, t: text) :: texts:
 	add yaml value "%{_y}%.%{_t}%" from "CONFIG" to {_return::*}
 	return {_return::*}
 
 function getPlayer(p: player):
-	yaml value "players.%{_p}%" of file "plugins/SkBank/playerdata/%{_p}%.yml" isn't set
-	set yaml value "players.%{_p}%.money-of-player" of file "plugins/SkBank/playerdata/%{_p}%.yml" to "%{_p}'s balance%"
-	set yaml value "players.%{_p}%.money-in-bank" of file "plugins/SkBank/playerdata/%{_p}%.yml" to "0"
-	set yaml value "players.%{_p}%.exp-of-player" of file "plugins/SkBank/playerdata/%{_p}%.yml" to "%{_p}'s xp%"
-	set yaml value "players.%{_p}%.exp-in-bank" of file "plugins/SkBank/playerdata/%{_p}%.yml" to "0"
-	set yaml value "players.%{_p}%.login-status" of file "plugins/SkBank/playerdata/%{_p}%.yml" to "false"
-	set yaml value "players.%{_p}%.password" of file "plugins/SkBank/playerdata/%{_p}%.yml" to "not set"
+	load yaml "plugins/SkBank/playerdata/%{_p}%.yml" as "%{_p}%"
+	yaml value "%{_p}%" from "%{_p}%" isn't set
+	set yaml value "%{_p}%.money-of-player" from "%{_p}%" to "%{_p}'s balance%"
+	set yaml value "%{_p}%.money-in-bank" from "%{_p}%" to "0"
+	set yaml value "%{_p}%.exp-of-player" from "%{_p}%" to "%{_p}'s xp%"
+	set yaml value "%{_p}%.exp-in-bank" from "%{_p}%" to "0"
+	set yaml value "%{_p}%.login-status" from "%{_p}%" to "false"
+	set yaml value "%{_p}%.password" from "%{_p}%" to "not set"
+	save yaml "%{_p}%" without extra lines between nodes
 
 function logOut(p: player):
-	yaml value "players.%{_p}%.login-status" of file "plugins/SkBank/playerdata/%{_p}%.yml" is true:
-		set yaml value "players.%{_p}%.login-status" of file "plugins/SkBank/playerdata/%{_p}%.yml" to false
-
+	yaml value "%{_p}%.login-status" of file "plugins/SkBank/playerdata/%{_p}%.yml" is true:
+		set yaml value "%{_p}%.login-status" of file "plugins/SkBank/playerdata/%{_p}%.yml" to false
 		sendYAMLFile({_p}, "Status.Logged-Out")
 	else:
-		sendYAMLFile({_p}, "Status.Logged-Out")
+		sendYAMLFile({_p}, "Status.Log-In")
 
 function sendYAMLFile(p: player, t: text, y: text=0):
 	add yaml value {_t} from "MESSAGES" to {_s::*}
 	send "%{_s::*}%" to {_p}
 
 function setPass(p: player, y: text):
-	set {_t} to yaml value "players.%{_p}%.password" of file "plugins/SkBank/playerdata/%{_p}%.yml"
+	set {_t} to yaml value "%{_p}%.password" of file "plugins/SkBank/playerdata/%{_p}%.yml"
 	{_t} is "not set":
-		set yaml value "players.%{_p}%.password" of file "plugins/SkBank/playerdata/%{_p}%.yml" to {_y}
-		set yaml value "players.%{_p}%.login-status" of file "plugins/SkBank/playerdata/%{_p}%.yml" to "true"
+		set yaml value "%{_p}%.password" of file "plugins/SkBank/playerdata/%{_p}%.yml" to {_y}
+		set yaml value "%{_p}%.login-status" of file "plugins/SkBank/playerdata/%{_p}%.yml" to "true"
 
 		sendYAMLFile({_p}, "Password.Set-Success")
 	else:
@@ -90,8 +96,8 @@ function openExpGUI(p: player, i: text):
 		open virtual chest with size 3 named "%getMN(""Module-Names"", ""Bank-GUI"")%" to {_p}
 		make gui slot (integers between 0 and 26) of {_p} with white stained glass pane named "%getMN(""Module-Names"", ""Splitter.Name"")%" with lore "%getMN(""Module-Names"", ""Splitter.Lore"")%" to nothing
 		make gui slot 10 of {_p} with bottle o enchanting named "%getMN(""Module-Names"", ""Exp-Deposit.Name"")%" with lore "%getMN(""Module-Names"", ""Exp-Deposit.Lore"")%" to run function depositEXP({_p})
-		set {_s::*} to yaml value "players.%{_p}%.exp-of-player" of file "plugins/SkBank/playerdata/%{_p}%.yml"
-		set {_w::*} to yaml value "players.%{_p}%.exp-in-bank" of file "plugins/SkBank/playerdata/%{_p}%.yml"
+		set {_s::*} to yaml value "%{_p}%.exp-of-player" of file "plugins/SkBank/playerdata/%{_p}%.yml"
+		set {_w::*} to yaml value "%{_p}%.exp-in-bank" of file "plugins/SkBank/playerdata/%{_p}%.yml"
 		make gui slot 13 of {_p} with paper named "%getMN(""Module-Names"", ""Information"")%" with lore "&6Your EXP: &7%{_s::*}%||&6In Bank: &7%{_w::*}%" to nothing
 		make gui slot 16 of {_p} with bottle o enchanting named "%getMN(""Module-Names"", ""Exp-Withdraw.Name"")%" with lore "%getMN(""Module-Names"", ""Exp-Withdraw.Lore"")%" to run function withdrawEXP({_p})
 		make gui slot 20 of {_p} with arrow named "%getMN(""Module-Names"", ""Back.Name"")%" with lore "%getMN(""Module-Names"", ""Back.Lore"")%" to run function openMainGUI({_p})
@@ -100,7 +106,7 @@ function openExpGUI(p: player, i: text):
 		sendYAMLFile({_p}, "Status.Log-In")
 
 function openMainGUI(p: player):
-	set {_login-status} to yaml value "players.%{_p}%.login-status" of file "plugins/SkBank/playerdata/%{_p}%.yml"
+	set {_login-status} to yaml value "%{_p}%.login-status" of file "plugins/SkBank/playerdata/%{_p}%.yml"
 	{_login-status} is true:
 		open virtual chest with size 3 named "%getMN(""Module-Names"", ""Bank-GUI"")%" to {_p}
 		make gui slot (integers between 0 and 26) of {_p} with white stained glass pane named "%getMN(""Module-Names"", ""Splitter.Name"")%" with lore "%getMN(""Module-Names"", ""Splitter.Lore"")%" to nothing
@@ -112,11 +118,11 @@ function openMainGUI(p: player):
 
 function openMoneyGUI(p: player, t: text):
 	{_t} is "true":
-		open virtual chest with size 3 named "%getMN(""Module-Names"", ""Operations"")%" to {_p}
+		open virtual chest with size 3 named "%getMN(""Module-Names"", ""Bank-GUI"")%" to {_p}
 		make gui slot (integers between 0 and 26) of {_p} with white stained glass pane named "%getMN(""Module-Names"", ""Splitter.Name"")%" with lore "%getMN(""Module-Names"", ""Splitter.Lore"")%" to nothing
 		make gui slot 10 of {_p} with emerald named "%getMN(""Module-Names"", ""Deposit.Name"")%" with lore "%getMN(""Module-Names"", ""Deposit.Lore"")%" to run function depositMoney({_p})
-		set {_s::*} to yaml value "players.%{_p}%.money-of-player" of file "plugins/SkBank/playerdata/%{_p}%.yml"
-		set {_w::*} to yaml value "players.%{_p}%.money-in-bank" of file "plugins/SkBank/playerdata/%{_p}%.yml"
+		set {_s::*} to yaml value "%{_p}%.money-of-player" of file "plugins/SkBank/playerdata/%{_p}%.yml"
+		set {_w::*} to yaml value "%{_p}%.money-in-bank" of file "plugins/SkBank/playerdata/%{_p}%.yml"
 		make gui slot 13 of {_p} with paper named "%getMN(""Module-Names"", ""Information"")%" with lore "&6Your Money: &7%{_s::*}%||&6In Bank: &7%{_w::*}%" to nothing
 		make gui slot 16 of {_p} with redstone named "%getMN(""Module-Names"", ""Withdraw.Name"")%" with lore "%getMN(""Module-Names"", ""Withdraw.Lore"")%" to run function withdrawMoney({_p})
 		make gui slot 20 of {_p} with arrow named "%getMN(""Module-Names"", ""Back.Name"")%" with lore "%getMN(""Module-Names"", ""Back.Lore"")%" to run function openMainGUI({_p})
@@ -125,33 +131,39 @@ function openMoneyGUI(p: player, t: text):
 		sendYAMLFile({_p}, "Status.Log-In")
 
 function withdrawEXP(p: player):
-	yaml value "players.%{_p}%.exp-in-bank" of file "plugins/SkBank/playerdata/%{_p}%.yml" - {exp} >= 0:
-		set yaml value "players.%{_p}%.exp-in-bank" of file "plugins/SkBank/playerdata/%{_p}%.yml" to (yaml value "players.%{_p}%.exp-in-bank" of file "plugins/SkBank/playerdata/%{_p}%.yml" - {exp})
-		set yaml value "players.%{_p}%.exp-of-player" of file "plugins/SkBank/playerdata/%{_p}%.yml" to (yaml value "players.%{_p}%.exp-of-player" of file "plugins/SkBank/playerdata/%{_p}%.yml" + {exp})
- 
-		add {exp} to {_p}'s xp
+	load yaml "plugins/SkBank/playerdata/%{_p}%.yml" as "%{_p}%"
+	set {_item} to yaml value "Economy.EXP" from "CONFIG"
+	yaml value "%{_p}%.exp-in-bank" from "%{_p}%" - {_item} >= 0:
+		set yaml value "%{_p}%.exp-in-bank" from "%{_p}%" to (yaml value "%{_p}%.exp-in-bank" from "%{_p}%" - {_item})
+		set yaml value "%{_p}%.exp-of-player" from "%{_p}%" to ({_p}'s xp + {_item})
+		set {_p}'s xp to {_p}'s xp + {_item}
 		sendYAMLFile({_p}, "Operation.Exp.Withdraw-Success")
 	else:
 		sendYAMLFile({_p}, "Operation.Error.Not-Enough-Exp")
+	save yaml "%{_p}%" without extra lines between nodes
+	unload yaml "%{_p}%"
 
 function withdrawMoney(p: player):
-	yaml value "players.%{_p}%.money-in-bank" of file "plugins/SkBank/playerdata/%{_p}%.yml" - {money} >= 0:
-		set yaml value "players.%{_p}%.money-in-bank" of file "plugins/SkBank/playerdata/%{_p}%.yml" to (yaml value "players.%{_p}%.money-in-bank" of file "plugins/SkBank/playerdata/%{_p}%.yml" -  {money})
-		set yaml value "players.%{_p}%.money-of-player" of file "plugins/SkBank/playerdata/%{_p}%.yml" to (yaml value "players.%{_p}%.money-of-player" of file "plugins/SkBank/playerdata/%{_p}%.yml" + {money})
-
-		add {money} to {_p}'s balance
+	load yaml "plugins/SkBank/playerdata/%{_p}%.yml" as "%{_p}%"
+	set {_item} to yaml value "Economy.Money" from "CONFIG"
+	yaml value "%{_p}%.money-in-bank" from "%{_p}%" - {_item} >= 0:
+		set yaml value "%{_p}%.money-in-bank" from "%{_p}%" to (yaml value "%{_p}%.money-in-bank" from "%{_p}%" - {_item})
+		set yaml value "%{_p}%.money-of-player" from "%{_p}%" to ({_p}'s balance + {_item})
+		set {_p}'s balance to {_p}'s balance + {_item}
 		sendYAMLFile({_p}, "Operation.Succesfull")
 	else:
 		sendYAMLFile({_p}, "Operation.Error.Not-Enough-Currency")
+	save yaml "%{_p}%" without extra lines between nodes
+	unload yaml "%{_p}%"
 
 on load:
 	execute console command "/skbank reload"
 
 on join:
-	set yaml value "players.%player%.login-status" of file "plugins/SkBank/playerdata/%{_p}%.yml" to false
 	getPlayer(player)
 
 on quit:
+	set yaml value "%player%.login-status" of file "plugins/SkBank/playerdata/%player%.yml" to false
 	getPlayer(player)
 
 command /bank [<text=help>] [<text>] [<text>]:
