@@ -1,8 +1,0 @@
-players:
-    cap-will-die-in-endgame: # Your name, as well.
-        currency: 5,150,000.00 $ # The amount of money you have.
-        storaged-money: 0 # The amount of money in your bank, unlimited.
-        player-exp: 98999 # The amount of xp you have.
-        storaged-exp: 0 # The amount of xp in your bank, unlimited.
-        lock: true # This changes when player log in/out.
-        password: yourpasswordgoeshere # You can set your password to anything you want!
