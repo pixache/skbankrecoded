@@ -1,11 +1,10 @@
 Economy:
-    # You can change these values but don't forget to change item lores too as well.
+    ## If you change these values, don't forget to change item lores also!
     Money: 5000
     EXP: 500
 Module-Names:
     Bank-GUI: '&4My Bank'
     Information: '&b» &aInformation &b»'
-    Operations: '&b» &aMoney Operations &b»'
     Splitter:
         Name: '&b» &aBank &b»'
         Lore: '&7The most trustful bank ever!'
