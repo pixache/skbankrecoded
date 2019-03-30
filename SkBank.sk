@@ -1,4 +1,4 @@
-#Version: 1.3
+#Version: 1.4
 #Don't change the version!
 
 function changePass(p: player, y: text):
@@ -30,6 +30,15 @@ function getMN(y: text, t: text) :: texts:
 	add yaml value "%{_y}%.%{_t}%" from "CONFIG" to {_return::*}
 	return {_return::*}
 
+function placeholder(p: player, a: text, b: text, c: text) :: texts:
+	add yaml value "%{_p}%.%{_a}%" of file "plugins/SkBank/playerdata/%{_p}%.yml" to {_s}
+	add yaml value "%{_p}%.%{_b}%" of file "plugins/SkBank/playerdata/%{_p}%.yml" to {_w}
+	add getMN("Module-Names","Information.Lore") to {_q::*}
+	replace all "{type}" with "%{_c}%" in {_q::*}
+	replace all "{amount}" with "%{_s}%" in {_q::*}
+	replace all "{inBank}" with "%{_w}%" in {_q::*}
+	return {_q::*}
+
 function getPlayer(p: player):
 	load yaml "plugins/SkBank/playerdata/%{_p}%.yml" as "%{_p}%"
 	yaml value "%{_p}%" from "%{_p}%" isn't set
@@ -48,7 +57,7 @@ function logOut(p: player):
 	else:
 		sendYAMLFile({_p}, "Status.Log-In")
 
-function sendYAMLFile(p: player, t: text, y: text=0):
+function sendYAMLFile(p: executor, t: text, y: text=0):
 	add yaml value {_t} from "MESSAGES" to {_s::*}
 	send "%{_s::*}%" to {_p}
 
@@ -110,20 +119,16 @@ function opManager(p: player, i: text):
 function openMainGUI(p: player):
 	set {_login} to yaml value "%{_p}%.login-status" of file "plugins/SkBank/playerdata/%{_p}%.yml"
 	{_login} is true:
-		open virtual chest with size 3 named "%getMN(""Module-Names"", ""Bank-GUI"")%" to {_p}
+		open virtual chest with size 3 named "%getMN(""Module-Names"", ""Bank-Menu.Name"")%" to {_p}
 		make gui slot (integers between 0 and 26) of {_p} with white stained glass pane named "%getMN(""Module-Names"", ""Splitter.Name"")%" with lore "%getMN(""Module-Names"", ""Splitter.Lore"")%" to nothing
 		make gui slot 10 of {_p} with diamond named "%getMN(""Module-Names"", ""Deposit.Name"")%" to run:
 			make gui slot 10 of {_p} with emerald named "%getMN(""Module-Names"", ""Deposit.Name"")%" with lore "%getMN(""Module-Names"", ""Deposit.Lore"")%" to run function opManager({_p}, "dMoney")
-			set {_s::*} to yaml value "%{_p}%.money-of-player" of file "plugins/SkBank/playerdata/%{_p}%.yml"
-			set {_w::*} to yaml value "%{_p}%.money-in-bank" of file "plugins/SkBank/playerdata/%{_p}%.yml"
-			make gui slot 13 of {_p} with paper named "%getMN(""Module-Names"", ""Information"")%" with lore "&6Your Money: &7%{_s::*}%||&6In Bank: &7%{_w::*}%" to nothing
+			make gui slot 13 of {_p} with paper named "%getMN(""Module-Names"", ""Information.Name"")%" with lore "%placeholder({_p}, ""money-of-player"", ""money-in-bank"", ""Money"")%" to nothing
 			make gui slot 16 of {_p} with redstone named "%getMN(""Module-Names"", ""Withdraw.Name"")%" with lore "%getMN(""Module-Names"", ""Withdraw.Lore"")%" to run function opManager({_p}, "wMoney")
 			make gui slot 22 of {_p} with arrow named "%getMN(""Module-Names"", ""Back.Name"")%" with lore "%getMN(""Module-Names"", ""Back.Lore"")%" to run function openMainGUI({_p})
 		make gui slot 16 of {_p} with bottle o enchanting named "%getMN(""Module-Names"", ""Exp-Deposit.Name"")%" to run:
 			make gui slot 10 of {_p} with bottle o enchanting named "%getMN(""Module-Names"", ""Exp-Deposit.Name"")%" with lore "%getMN(""Module-Names"", ""Exp-Deposit.Lore"")%" to run function opManager({_p}, "dExp")
-			set {_s::*} to yaml value "%{_p}%.exp-of-player" of file "plugins/SkBank/playerdata/%{_p}%.yml"
-			set {_w::*} to yaml value "%{_p}%.exp-in-bank" of file "plugins/SkBank/playerdata/%{_p}%.yml"
-			make gui slot 13 of {_p} with paper named "%getMN(""Module-Names"", ""Information"")%" with lore "&6Your EXP: &7%{_s::*}%||&6In Bank: &7%{_w::*}%" to nothing
+			make gui slot 13 of {_p} with paper named "%getMN(""Module-Names"", ""Information.Name"")%" with lore "%placeholder({_p}, ""exp-of-player"", ""exp-in-bank"", ""EXP"")%" to nothing
 			make gui slot 16 of {_p} with bottle o enchanting named "%getMN(""Module-Names"", ""Exp-Withdraw.Name"")%" with lore "%getMN(""Module-Names"", ""Exp-Withdraw.Lore"")%" to run function opManager({_p}, "wExp")
 			make gui slot 22 of {_p} with arrow named "%getMN(""Module-Names"", ""Back.Name"")%" with lore "%getMN(""Module-Names"", ""Back.Lore"")%" to run function openMainGUI({_p})
 		make gui slot 22 of {_p} with barrier named "%getMN(""Module-Names"", ""Close.Name"")%" with lore "%getMN(""Module-Names"", ""Close.Lore"")%" to close
@@ -132,6 +137,10 @@ function openMainGUI(p: player):
 
 on load:
 	execute console command "/skbank reload"
+
+on unload:
+	unload yaml "CONFIG"
+	unload yaml "MESSAGES"
 
 on join:
 	getPlayer(player)
@@ -144,6 +153,7 @@ function check(t: text, p: executor):
 	{_p} has permission "skbank.reload":
 		{_t} is "update":
 			if line 1 in file "plugins/Skript/scripts/%script's name%.sk" isn't line 1 from url "https://raw.githubusercontent.com/pixache/skbankrecoded/master/SkBank.sk":
+				sendYAMLFile({_p}, "Commands.Admin.Updating")
 				set {_n} to line 1 in file "plugins/Skript/scripts/%script's name%.sk"
 				set {_s} to line 1 from url "https://raw.githubusercontent.com/pixache/skbankrecoded/master/SkBank.sk"
 				replace all "##Version: " with "" in {_s}
@@ -154,11 +164,14 @@ function check(t: text, p: executor):
 				set file contents of "plugins/SkBank/backups/%{_n}%/config.yml" to file contents of "plugins/SkBank/config.yml"
 				set file contents of "plugins/Skript/scripts/%script's name%.sk" to contents from url "https://raw.githubusercontent.com/pixache/skbankrecoded/master/SkBank.sk"
 				execute {_p} command "/sk reload %script's name%"
-				send "&eSkBank successfully updated to version %{_s}%" and "&eYou can find old version in backups folder." to {_p}
+				set {_ver::*} to yaml value "Commands.Admin.Updated" from "MESSAGES"
+				replace all "{ver}" with "%{_s}%" in {_ver::*}
+				send "%{_ver::*}%" to {_p}
+				sendYAMLFile({_p}, "Commands.Admin.Backed-Up")
 			else:
-				send "&eYou are using the latest version of SkBank." to {_p}
+				sendYAMLFile({_p}, "Commands.Admin.Latest-Version")
 		{_t} is "reload":
-			send "&eReloading SkBank..." to {_p}
+			sendYAMLFile({_p}, "Commands.Admin.Reloading")
 			if dir "plugins/SkBank/" doesn't exist:
 				create dir "plugins/SkBank/"
 				create dir "plugins/SkBank/playerdata"
@@ -169,13 +182,13 @@ function check(t: text, p: executor):
 			load yaml "plugins/SkBank/messages.yml" as "MESSAGES"
 			save yaml "CONFIG" without extra lines between nodes
 			save yaml "MESSAGES" without extra lines between nodes
-			send "&eReload completed successfully." to {_p}
+			sendYAMLFile({_p}, "Commands.Admin.Reload-Complete")
 			if line 1 in file "plugins/Skript/scripts/%script's name%.sk" isn't line 1 from url "https://raw.githubusercontent.com/pixache/skbankrecoded/master/SkBank.sk":
-				send "&eYou are using an outdated version of SkBank" to {_p}
+				sendYAMLFile({_p}, "Commands.Admin.Outdated-Ver")
 				{_p} is a player:
-					send "&e<suggest command:/skbank update>Click&r &7to update the skript." to {_p}
+					sendYAMLFile({_p}, "Commands.Admin.Click-To-Update")
 				else:
-					send "&eYou can update the skript in game via /skbank update command." to console
+					sendYAMLFile(console, "Commands.Admin.Only-In-Game")
 
 command /bank [<text=help>] [<text>] [<text>]:
 	aliases: skbank, skb, sb
@@ -213,3 +226,5 @@ command /bank [<text=help>] [<text>] [<text>]:
 				execute player command "skbank help"
 		arg-1 is "logout":
 			logOut(player)
+		arg-1 is not "help" or "login" or "logout" or "pw" or "reload" or "update":
+			execute player command "skbank help"
