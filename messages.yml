@@ -1,8 +1,19 @@
 Commands:
+    Admin:
+        Backed-Up: '&7[&9&lBANK&7] &b» &eCheck backups folder for older version.'
+        Click-To-Update: '&7[&9&lBANK&7] &b» &e<suggest command:/skbank update>Click
+            to update.'
+        Latest-Version: '&7[&9&lBANK&7] &b» &eYou are using latest version, thanks!'
+        Reloading: '&7[&9&lBANK&7] &b» &eReloading skBank...'
+        Reload-Complete: '&7[&9&lBANK&7] &b» &eReload completed.'
+        Outdated-Ver: '&7[&9&lBANK&7] &b» &eYou are using an outdated version.'
+        Only-In-Game: You may update the skript in game.
+        Updating: '&7[&9&lBANK&7] &b» &eUpdating skBank, hold on.'
+        Updated: '&7[&9&lBANK&7] &b» &eSkript has updated to {ver}.'
     Message-Splitter:
     - '&9&m--------------------------------'
     Tip:
-    - '&6You may click to commands to auto write.'
+    - '&fYou may click to commands to auto write.'
     Help-Message:
     - '&6<suggest command:/skbank help>/skbank &7help &b» &aShows the help message.'
     - '&6<suggest command:/skbank login>/skbank &7login <password> &b» &aLogin to
@@ -11,6 +22,9 @@ Commands:
     - '&6<suggest command:/skbank open>/skbank &7open &b» &aOpens bank GUI.'
     - '&6<suggest command:/skbank pw set>/skbank &7pw set <password> &b» &aTo set
         your password.'
+    - '&6<suggest command:/skbank reload>/skbank &7reload &b» &aReloads config & messages.'
+    - '&6<suggest command:/skbank update>/skbank &7update &b» &aUpdates skript to
+        latest version.'
 Status:
     Logged-Out: '&7[&9&lBANK&7] &b» &eYou have logged out from your bank account.'
     Logged-Out-Already: '&7[&9&lBANK&7] &b» &eYou have already logged out.'
