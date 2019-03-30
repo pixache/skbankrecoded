@@ -8,6 +8,7 @@ skUtilities
 Skript (2.2dev37+)
 TuSKe
 skQuery (for lores)
+skript-yaml
 
 # Permissions
 This skript is free to use, but you can't claim it as your own or try to sell to anyone.
